@@ -8,11 +8,9 @@
 
 # 向下调整
 
-总是将当前结点V与它的左右孩子比较(如果有的话)，假如孩子中存在权值比结点V的权值大的，就将其中权值最大的那个孩子结点与结点V交换。交换完毕后继续让结点V和孩子比较，直到结点V的孩子的权值都比结点V的权值小或结点V不存在孩子结点。<u>**时间复杂度O(logn)。**</u>
-
 ![1](README.assets/1.jpg)
 
-
+总是将当前结点V与它的左右孩子比较(如果有的话)，假如孩子中存在权值比结点V的权值大的，就将其中权值最大的那个孩子结点与结点V交换。交换完毕后继续让结点V和孩子比较，直到结点V的孩子的权值都比结点V的权值小或结点V不存在孩子结点。<u>**时间复杂度O(logn)。**</u>
 
 ```c++
 void downAdjust(int low, int high) {
@@ -30,8 +28,6 @@ void downAdjust(int low, int high) {
 ------
 
 # 建堆
-
-
 
 ![2](README.assets/2.jpg)
 
@@ -90,3 +86,4 @@ void heapSort() {
 }
 ```
 
+![heapSort](README.assets/heapSort.gif)

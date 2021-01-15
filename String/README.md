@@ -87,3 +87,7 @@ void getNextval(char str[], int lenght) {
 ```
 
 优化后的next数组被称为nextval数组，丢失了next数组的最长相等前后缀的含义，可以把nextval[i]的含义理解为当模式串pattern的i+1位发生失配时，i应回退到的最佳位置。
+
+------
+
+# AC自动机
