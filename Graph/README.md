@@ -65,6 +65,98 @@ BFSTrave(G) {
 }
 ```
 
+## 3. 邻接矩阵
+
+```c++
+#include<iostream>
+#include<queue>
+using namespace std;
+const int MAXV = 255;
+int n;
+// 邻接矩阵
+int graph[MAXV][MAXV] = {0};
+bool visited[MAXV] = {false};
+void DFS(int u) {
+    visited[u] = true;
+    for(int i=0; i<n; i++)
+        if(visited[i]==false&&graph[u][i]!=0)
+            DFS(i);
+}
+void DFSTrave() {
+    for(int i=0; i<n; i++)
+        if(visited[i]==false)
+            DFS(i);
+}
+void BFS(int u) {
+    queue<int> q;
+    q.push(u);
+    int temp;
+    while(!q.empty()) {
+        temp = q.front();
+        visited[temp]=true;
+        q.pop();
+        for(int i=0; i<n; i++)
+            if(graph[temp][i]!=0&&visited[i]==false)
+                q.push(i);
+    }
+}
+void BFSTrave() {
+    for(int i=0; i<n; i++)
+        if(visited[i]==false)
+            DFS(i);
+}
+int main() {
+    return 0;
+}
+```
+
+## 邻接表
+
+```c++
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+const int MAXV = 255;
+int n;
+// 邻接表
+vector<int> adj[MAXV];
+bool visited[MAXV] = {false};
+void DFS(int u) {
+    visited[u] = true;
+    for(int i=0; i<adj[u].size();i++)
+        if(visited[adj[u][i]]==false)
+            DFS(adj[u][i]);
+}
+void DFSTrave() {
+    for(int i=0; i<n; i++)
+        if(visited[i]==false)
+            DFS(i);
+}
+void BFS(int u) {
+    queue<int> q;
+    q.push(u);
+    int temp;
+    while(!q.empty()) {
+        temp = q.front();
+        visited[temp] = true;
+        q.pop();
+        for(int i=0; i<adj[temp].size(); i++) {
+            int k = adj[temp][i];
+            if(visited[k]==false) q.push(k);
+        }
+    }
+}
+void BFSTrave() {
+    for(int u=0; u<n; u++)
+        if(visited[u]==false)
+            BFS(u);
+}
+int main() {
+    return 0;
+}
+```
+
 ------
 
 # 最短路径
