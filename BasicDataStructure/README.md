@@ -21,18 +21,18 @@
 using namespace std;
 // 递归的二分查找
 int binarySearchI(int nums[], int low, int high, int target) {
-    if(low>high) return low;
-    int mid = (low+high)/2;
-    if(target==nums[mid]) return mid;
-    else if(target<nums[mid]) return binarySearchI(nums, low, mid-1, target);
+    if (low > high) return low;
+    int mid = (low + high) / 2;
+    if (target == nums[mid]) return mid;
+    else if(target < nums[mid]) return binarySearchI(nums, low, mid-1, target);
     else return binarySearchI(nums, mid+1, high, target);
 }
 // 迭代的二分查找
 int binarySearchII(int nums[], int low, int high, int target) {
-    while(low<high) {
-    	int mid = (low+high)/2;
-        if(nums[mid]==target) return mid;
-        else if(nums[mid]>target) high = mid - 1;
+    while (low < high) {
+    	int mid = (low + high) / 2;
+        if (nums[mid] == target) return mid;
+        else if(nums[mid] > target) high = mid - 1;
         else low = mid + 1;
     }
     return low;
@@ -41,7 +41,7 @@ int main() {
     // 随机数生成
     int nums[20];
     srand((int)time(0));
-    for(int i=0; i<20; i++) nums[i] = random(255);
+    for(int i = 0; i < 20; i++) nums[i] = random(255);
     sort(nums, nums+20);
     int target = nums[10];
     cout << binarySearchI(nums, 0, 19, target) << "\n";

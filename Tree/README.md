@@ -8,7 +8,7 @@
 
 ------
 
-# 二叉树遍历
+# 二叉树基本操作
 
 二叉树的遍历是指按某条搜索路径访问树中每个结点，使得每个结点均被访问一次，而且仅被访问一次。常见的遍历次序有先序、中序、后序和层次遍历，其中<u>**序指的是根结点在何时被访问**</u>。
 
@@ -35,23 +35,23 @@ node* createNode(int data) {
 }
 // 插入结点
 void insertNode(node* &root, int data) {
-    if(root==NULL) {
+    if(root == NULL) {
         root = createNode(data);
     } else {
-        if (data==root->data) return;
-        else if(data<root->data) insertNode(root->left, data);
+        if (data == root->data) return;
+        else if(data < root->data) insertNode(root->left, data);
         else insertNode(root->right, data);
     }
 }
 // 建立二叉树
 node* createBinaryTree(int nums[], int n) {
     node* root = NULL;
-    for(int i=0; i<n; i++) insertNode(root, nums[i]);
+    for(int i = 0; i < n; i++) insertNode(root, nums[i]);
     return root;
 }
 // 先序遍历
 void preOrder(node* root) {
-    if(root==NULL) return;
+    if(root == NULL) return;
     preRes.push_back(root->data);
     //cout << root->data << " ";
     preOrder(root->left);
@@ -59,7 +59,7 @@ void preOrder(node* root) {
 }
 // 中序遍历
 void inOrder(node* root) {
-    if(root==NULL) return;
+    if(root == NULL) return;
     inOrder(root->left);
     inRes.push_back(root->data);
     //cout << root->data << " ";
@@ -67,7 +67,7 @@ void inOrder(node* root) {
 }
 // 后序遍历
 void postOrder(node* root) {
-    if(root==NULL) return;
+    if(root == NULL) return;
     postOrder(root->left);
     postOrder(root->right);
     //cout << root->data << " ";
@@ -81,30 +81,30 @@ void layerOrder(node* root) {
         node* temp = q.front();
         q.pop();
         cout << temp->data << " ";
-        if(temp->left!=NULL) {
-            temp->left->layer = temp->layer+1;
+        if(temp->left != NULL) {
+            temp->left->layer = temp->layer + 1;
             q.push(temp->left);
         }
-        if(temp->right!=NULL) {
-            temp->right->layer = temp->layer+1;
+        if(temp->right != NULL) {
+            temp->right->layer = temp->layer + 1;
             q.push(temp->right);
         }
     }
 }
 
 node* reCreate(int preLeft, int preRight, int inLeft, int inRight) {
-    if(preLeft>preRight) return NULL;
+    if(preLeft > preRight) return NULL;
     node* root = new node;
     root->data = preRes[preLeft];
     // 寻找先序遍历头结点在中序遍历中的位置
     int index = 0;
-    for(vector<int>::iterator it=inRes.begin(); it!=inRes.end(); it++, index++) {
-        if((*it)==preRes[preLeft]) break;
+    for(vector<int>::iterator it = inRes.begin(); it != inRes.end(); it++, index++) {
+        if((*it) == preRes[preLeft]) break;
     }
     // 左子树结点个数
     int leftNumber = index - inLeft;
-    root->left = reCreate(preLeft+1, preLeft+leftNumber, inLeft, index-1);
-    root->right = reCreate(preLeft+leftNumber+1, preRight, index+1, inRight);
+    root->left = reCreate(preLeft + 1, preLeft + leftNumber, inLeft, index - 1);
+    root->right = reCreate(preLeft + leftNumber + 1, preRight, index + 1, inRight);
     return root;
 }
 // 使用先序遍历和中序遍历构建二叉树
@@ -112,50 +112,50 @@ void reCreateBinaryTree(node* root) {
     preRes.clear();
     preOrder(root);
     cout << "original preRes:" << " ";
-    for(vector<int>::iterator it=preRes.begin(); it!=preRes.end(); it++) cout << *it << " "; cout << endl;
+    for(vector<int>::iterator it = preRes.begin(); it != preRes.end(); it++) cout << *it << " "; cout << endl;
     inRes.clear();
     inOrder(root);
     cout << "original inRes:" << " ";
-    for(vector<int>::iterator it=inRes.begin(); it!=inRes.end(); it++) cout << *it << " "; cout << endl;
+    for(vector<int>::iterator it = inRes.begin(); it != inRes.end(); it++) cout << *it << " "; cout << endl;
 
-    node* reRoot = reCreate(0, N-1, 0, N-1);
+    node* reRoot = reCreate(0, N - 1, 0, N - 1);
 
     preRes.clear();
     preOrder(reRoot);
     cout << "recreated preRes:" << " ";
-    for(vector<int>::iterator it=preRes.begin(); it!=preRes.end(); it++) cout << *it << " "; cout << endl;
+    for(vector<int>::iterator it = preRes.begin(); it != preRes.end(); it++) cout << *it << " "; cout << endl;
     inRes.clear();
     inOrder(reRoot);
     cout << "recreated inRes:" << " ";
-    for(vector<int>::iterator it=inRes.begin(); it!=inRes.end(); it++) cout << *it << " "; cout << endl;
+    for(vector<int>::iterator it = inRes.begin(); it != inRes.end(); it++) cout << *it << " "; cout << endl;
 }
 // 搜索结点
 void searchNode(node* root, int data) {
-    if(root==NULL) {
+    if(root == NULL) {
         cout << "search failed" << endl;
         return;
     }
-    if(data==root->data) cout << "search succeeded" << endl;
-    else if(data<root->data) searchNode(root->left, data);
+    if(data == root->data) cout << "search succeeded" << endl;
+    else if(data < root->data) searchNode(root->left, data);
     else searchNode(root->right, data);
 }
 // 寻找最大权值结点
 node* findMax(node* root) {
-    while(root->right!=NULL) root = root->right;
+    while(root->right != NULL) root = root->right;
     return root;
 }
 // 寻找最小权值结点
 node* findMin(node* root) {
-    while(root->left!=NULL) root = root->left;
+    while(root->left != NULL) root = root->left;
     return root;
 }
 // 删除结点
 void deleteNode(node* &root, int data) {
-    if(root==NULL) return;
-    if(root->data==data) {
-        if(root->left==NULL&&root->right==NULL) {
+    if(root == NULL) return;
+    if(root->data == data) {
+        if(root->left == NULL && root->right == NULL) {
             root = NULL;
-        } else if(root->left!=NULL) {
+        } else if(root->left != NULL) {
             node* pre = findMax(root->left);
             root->data = pre->data;
             deleteNode(root->left, pre->data);
@@ -164,7 +164,7 @@ void deleteNode(node* &root, int data) {
             root->data = next->data;
             deleteNode(root->right, next->data);
         }
-    } else if(root->data>data) {
+    } else if(root->data > data) {
         deleteNode(root->left, data);
     } else {
         deleteNode(root->right, data);
@@ -190,6 +190,10 @@ int main() {
 ------
 
 # 平衡二叉树
+
+对平衡二叉树的任意结点来说，左子树和右子树的高度之差的绝对值不超过1，其中左子树与右子树的高度之差称为该节点的平衡因子。
+
+<u>**只要把最靠近插入结点的失衡结点调整到正常，路径上的所有结点都会平衡。**</u>
 
 ```c++
 #include<iostream>
@@ -279,7 +283,7 @@ node* createBinaryTree(int nums[], int n) {
 // 先序遍历
 void preOrder(node* root) {
     if(root==NULL) return;
-    //cout << root->data << " ";
+    cout << root->data << " ";
     preOrder(root->left);
     preOrder(root->right);
 }
@@ -287,7 +291,7 @@ void preOrder(node* root) {
 void inOrder(node* root) {
     if(root==NULL) return;
     inOrder(root->left);
-    //cout << root->data << " ";
+    cout << root->data << " ";
     inOrder(root->right);
 }
 int main() {
@@ -306,6 +310,10 @@ int main() {
 ------
 
 # 哈夫曼树
+
+<u>**对同一组叶子结点来说，哈夫曼树可以是不唯一的，但是最小带权路径长度一定是唯一的。**</u>
+
+<u>**哈夫曼树的构建思想：反复选择两个最小的元素，合并，直到只剩下一个元素。**</u>
 
 ```c++
 #include<iostream>
@@ -330,12 +338,6 @@ int main() {
     return 0;
 }
 ```
-
-------
-
-# 哈夫曼编码
-
-## 1. 用贪心算法实现哈夫曼压缩编码
 
 ------
 
