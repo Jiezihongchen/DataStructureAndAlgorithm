@@ -307,6 +307,36 @@ int main() {
 
 # 并查集
 
+1. 初始化
+
+   ```c++
+   for (int i = 1; i <= N; i++)
+       father[i] = i;
+   ```
+
+2. 查找
+
+   ```c++
+   int findFather(int x) {
+   	while (x != father[x])
+           x = father[x];
+       return x;
+   }
+   ```
+
+3. 合并
+
+   ```c++
+   void Union(int a, int b) {
+       int faA = findFather(a);
+       int faB = findFather(b);
+       if (faA != faB)
+           father[faA] = faB;
+   }
+   ```
+
+   
+
 ------
 
 # 哈夫曼树

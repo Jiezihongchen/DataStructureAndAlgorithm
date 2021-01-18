@@ -26,10 +26,68 @@ Dijkstra(G, dis[], s) {
 	}
 }
 ```
+```c++
+int n, G[MAXV][MAXV];
+int d[MAXV];
+bool vis[MAXV] = {false};
+void dijstra(int s) {
+    fill(d, d + MAXV, INF);
+    d[s] = 0;
+    for (int i = 0; i < n; i++) {
+        int u = -1, MIN = INF;
+        for (int j = 0; j < n; j++) {
+            if (d[j] < MIN && vis[j] == false) {
+                MIN = d[j]; u = j;
+            }
+        }
+        if (u == -1) return;
+        vis[u] = true;
+        for (int v = 0; v < n; v++) {
+            if (vis[u] == false && g[u][v] >= 0 && d[v] > d[u] + graph[u][v])
+                d[v] = d[u] + graph[u][v];
+        }
+    }
+}
+```
 
 ## 2. Bellman-Ford算法
 
 Bellman-Ford算法可以解决<u>**单源最短路径问题**</u>，也可以处理<u>**有负权边**</u>的情况。
+
+```c++
+struct Node {
+    int V;
+    int dis;
+}
+vector<Node> Adj[MAXV];
+int n;
+int d[MAXV];
+bool Bellman(int s) {
+    fill(d, d + MAXV, INF);
+    d[s] = 0;
+    for (int i = 0; i < n - 1; i++) {
+        for (int u = 0; u < n; u++) {
+            for (int j = 0; j < Adj[u].size(); j++) {
+                int v = Adj[u][j].v;
+                int dis = Adj[u][j].dis;
+                if (d[u] + dis < d[v]) {
+                    d[v] = d[u] + dis;
+                }
+            }
+        }
+    }
+    for (int u = 0; u < n; u++) {
+        for (int j = 0; j < Adj[u].size(); j++) {
+            int v = Adj[u][j].v;
+            int dis = Adj[u][j].dis;
+            if (d[u] + dis < d[v]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+```
 
 ## 3. SPFA算法
 
@@ -46,5 +104,19 @@ Floyd算法用来解决<u>**全源最短路径问题**</u>，即对给定的图G
     以顶点k作为中介点，枚举所有顶点i和j
     	if (dis[i][k] + dis[k][j] < dis[i][j])
             dis[i][j] = dis[i][k] + dis[k][j]
+```
+
+```c++
+void Floyd() {
+    for (int k = 0; k < n; k++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (dis[i][k] != INF && dis[k][j] != INF && dis[i][k] + dis[k][j] < dis[i][j]) {
+                    dis[i][j] = dis[i][k] + dis[k][j];
+                }
+            }
+        }
+    }
+}
 ```
 

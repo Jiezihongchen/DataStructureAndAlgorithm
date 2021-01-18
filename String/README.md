@@ -91,3 +91,4 @@ void getNextval(char str[], int lenght) {
 ------
 
 # AC自动机
+
