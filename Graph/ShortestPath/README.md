@@ -50,48 +50,9 @@ void dijstra(int s) {
 }
 ```
 
-## 2. Bellman-Ford算法
+------
 
-Bellman-Ford算法可以解决<u>**单源最短路径问题**</u>，也可以处理<u>**有负权边**</u>的情况。
-
-```c++
-struct Node {
-    int V;
-    int dis;
-}
-vector<Node> Adj[MAXV];
-int n;
-int d[MAXV];
-bool Bellman(int s) {
-    fill(d, d + MAXV, INF);
-    d[s] = 0;
-    for (int i = 0; i < n - 1; i++) {
-        for (int u = 0; u < n; u++) {
-            for (int j = 0; j < Adj[u].size(); j++) {
-                int v = Adj[u][j].v;
-                int dis = Adj[u][j].dis;
-                if (d[u] + dis < d[v]) {
-                    d[v] = d[u] + dis;
-                }
-            }
-        }
-    }
-    for (int u = 0; u < n; u++) {
-        for (int j = 0; j < Adj[u].size(); j++) {
-            int v = Adj[u][j].v;
-            int dis = Adj[u][j].dis;
-            if (d[u] + dis < d[v]) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-```
-
-## 3. SPFA算法
-
-## 4. Floyd算法
+## 2. Floyd算法
 
 Floyd算法用来解决<u>**全源最短路径问题**</u>，即对给定的图G(V, E)，求任意两点u，v之间的最短路径长度。
 
